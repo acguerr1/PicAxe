@@ -32,9 +32,9 @@ Create and activate a virtual environment:
 
 #### 3. Install Dependencies
 Run this to install python dependencies and models needed
-```bash
-python ./src/install_pkgs.py
-```
+    ```bash
+    python ./src/install_pkgs.py
+    ```
 
 #### 4. Install Poppler (required for pdf2image):
 

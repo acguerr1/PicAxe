@@ -154,7 +154,6 @@ def main(args):
         if temp_dir:
             shutil.rmtree(temp_dir)
         
-        # cleanup_after_processing()
     cleanup_after_processing()
     print("\nExtraction completed successfully.")
     end = time.time()  # Record the end time
