@@ -2,8 +2,14 @@
 import os
 import sys
 import cv2 as cv
-import layoutparser as lp
-from paddleocr import PaddleOCR
+# import layoutparser as lp
+# from paddleocr import PaddleOCR
+
+try:
+    import layoutparser as lp
+    from paddleocr import PaddleOCR
+except ImportError as e:
+    raise RuntimeError(f"Missing dependency: {e}. Run 'python src/install_pkgs.py'")
 
 # Add the parent directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -14,40 +20,11 @@ from config import config
 model_config_path = config.model_config_path
 
 # Initialize the OCR model
-ocrm = PaddleOCR(use_angle_cls=True, lang='en')  # Initialize the PaddleOCR model
-
-
-# def initialize_model():
-#     """Initialize the layout detection model with specific configuration."""
-#     model_dir = os.path.expanduser('~/.cache/layoutparser/model_zoo/PubLayNet')
-    
-#     required_files = [
-#         'inference.pdiparams',
-#         'inference.pdiparams.info',
-#         'inference.pdmodel'
-#     ]
-    
-#     if not all(os.path.exists(os.path.join(model_dir, f)) for f in required_files):
-#         raise RuntimeError("Required model files not found. Please run install_pkgs.py first")
-    
-#     kk = [os.path.exists(os.path.join(model_dir, f)) for f in required_files]
-#     print(kk, "trues---0S0S\n")
-#     jj = [os.path.join(model_dir, f) for f in required_files]
-#     print( jj, 'files----0S0\n')
-    
-#     global model
-
-#     # 'MODEL_CONFIG_PATH', 'lp://PubLayNet/ppyolov2_r50vd_dcn_365e/config'
-#     model = lp.PaddleDetectionLayoutModel(
-#         config_path=model_config_path, #os.path.join(model_dir, 'inference'), #model_config_path,
-#         # model_path=os.path.join(model_dir, 'inference'),
-#         extra_config={"MODEL.ROI_HEADS.SCORE_THRESH_TEST": 0.8, "MODEL.DOWNLOAD": False, 
-#                     #   "MODEL.WEIGHTS": os.path.join(model_dir, "inference")
-#                       },
-#         label_map={0: "Text", 1: "Title", 2: "List", 3: "Table", 4: "Figure"}
-#     )
-
-#     return model
+# ocrm = PaddleOCR(use_angle_cls=True, lang='en')  # Initialize the PaddleOCR model
+try:
+    ocrm = PaddleOCR(use_angle_cls=True, lang='en')
+except Exception as e:
+    raise RuntimeError(f"PaddleOCR failed to initialize: {e}")
 
 def initialize_model():
     """Initialize the layout detection model with local files."""
@@ -62,16 +39,30 @@ def initialize_model():
     if not all(os.path.exists(os.path.join(model_dir, f)) for f in required_files):
         raise RuntimeError("Required model files not found. Please run install_pkgs.py first")
 
-    global model 
-    model = lp.PaddleDetectionLayoutModel(
-        config_path=model_dir,
-        model_path=model_dir,
-        extra_config={
-            "MODEL.ROI_HEADS.SCORE_THRESH_TEST": 0.8,
-            "MODEL.DOWNLOAD": False
-        },
-        label_map={0: "Text", 1: "Title", 2: "List", 3: "Table", 4: "Figure"}
-    )
+    # global model 
+    # model = lp.PaddleDetectionLayoutModel(
+    #     config_path=model_dir,
+    #     model_path=model_dir,
+    #     extra_config={
+    #         "MODEL.ROI_HEADS.SCORE_THRESH_TEST": 0.8,
+    #         "MODEL.DOWNLOAD": False
+    #     },
+    #     label_map={0: "Text", 1: "Title", 2: "List", 3: "Table", 4: "Figure"}
+    # )
+
+    try:
+        global model 
+        model = lp.PaddleDetectionLayoutModel(
+            config_path=model_dir,
+            model_path=model_dir,
+            extra_config={
+                "MODEL.ROI_HEADS.SCORE_THRESH_TEST": 0.8,
+                "MODEL.DOWNLOAD": False
+            },
+            label_map={0: "Text", 1: "Title", 2: "List", 3: "Table", 4: "Figure"}
+        )
+    except Exception as e:
+        raise RuntimeError(f"LayoutParser model failed to load: {e}")
     return model
 
 def detect_layout(image_path):

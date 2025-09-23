@@ -43,6 +43,12 @@ def install_model():
             raise RuntimeError("Model extraction failed - required files missing")
         
 
+# Part 0: Upgrade setuptools and wheel first
+try:
+    print("Upgrading setuptools and wheel...")
+    subprocess.run(['pip', 'install', '--upgrade', 'setuptools', 'wheel'], check=True)
+except subprocess.CalledProcessError:
+    print("Failed to upgrade setuptools and wheel")
 
 # Part 1: Install packages
 try:
