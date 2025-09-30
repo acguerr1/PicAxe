@@ -9,10 +9,10 @@ To get started with this project, follow these installation steps:
 
 ### 1. Clone the Repository and Checkout the Branch
 
-You can clone the repository and directly switch to the `PicAxe_YOLO` branch:
+You can clone the repository and directly switch to the `PicAxe-YOLO` branch:
 
 ```bash
-git clone -b PicAxe_YOLO https://github.com/acguerr1/imageextraction.git
+git clone -b PicAxe-YOLO https://github.com/acguerr1/PicAxe.git
 cd imageextraction
 ```
 
