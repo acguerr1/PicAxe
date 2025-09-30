@@ -49,7 +49,7 @@ Option 2. Docker image:
 First, pull the Docker image using the following command:
 
 ```bash
-docker pull qilinzhou56/yolo-image-extractor:tagname
+docker pull qilinzhou56/yolo-image-extractor:latest
 ```
 #### 2.2 Navigate to Your Project Folder (e.g., image extraction)
 ```bash
@@ -60,7 +60,7 @@ cd /path/to/your/project_folder
 docker run -v $(pwd)/detection_weights:/app/detection_weights \
            -v $(pwd)/bulk_papers:/app/bulk_papers \
            -v $(pwd)/bulk_output:/app/bulk_output \
-           qilinzhou56/yolo-image-extractor:tagname --input_dir /app/bulk_papers --output_dir /app/bulk_output --combined
+           qilinzhou56/yolo-image-extractor:latest --input_dir /app/bulk_papers --output_dir /app/bulk_output --combined
 ```
 
 ## Run the Extraction Script 🏃
