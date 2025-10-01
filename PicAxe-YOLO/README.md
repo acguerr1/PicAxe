@@ -56,6 +56,14 @@ docker pull qilinzhou56/yolo-image-extractor:latest
 cd /path/to/your/project_folder
 ```
 #### 2.3 Run the Docker Container
+
+### 2.3.1 Prepare host folders (you may rename these)
+```bash
+mkdir -p bulk_papers bulk_output          # PDF Input and Image Output folders
+mkdir -p detection_weights                # Object Detection Weight folder
+```
+
+### 2.3.2 Docker Run
 ```bash
 docker run -v $(pwd)/detection_weights:/app/detection_weights \
            -v $(pwd)/bulk_papers:/app/bulk_papers \
