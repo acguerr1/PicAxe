@@ -2,92 +2,87 @@
 
 ## Overview
 
-This software tool (prgamming lanugage: Python3 3.10.12) is designed to process and analyze PDF images using PaddleOCR, LayoutParser, and other image processing libraries. It includes a pipeline of scripts to remove tables, extract text, and clean up images.
+This software tool is designed to programmatically process, analyze and extract images from PDF files(including scanned pdfs) using PaddleOCR, LayoutParser, and other image processing libraries. It includes a pipeline of scripts to remove tables, extract text, and clean up images.
 
-## Running
-Installing dependencies
-```bash
-pip install -r requirements.txt
-brew install poppler
-```
+There are 2 Options: 
+1. With the program cloned from this repo
+2. With a Docker image
 
-Running main.py with options
-```bash
-python main.py --file example_file.pdf
-python main.py --bulk
-python main.py --sample
-```
 
-## Setup Instructions
+## OPTION 1: Running the software
 
-### 1. Clone the Repository
+### Setup Instructions
+
+#### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>  <local-destination-name>
+git clone -b picAxe_paddleocr https://github.com/acguerr1/imageextraction.git <local-destination-name>
 cd <local-destination-name>
 ```
+NOTE: If you cloned main instead or the tagged version please make sure to change directory into PicAxe-OCR folder
 
-### 2. Set Up the Virtual Environment
+#### 2. Set Up the Virtual Environment
 
 Create and activate a virtual environment:
 
 ```bash
-pip install virtualenv
-virtualenv <venv-name>
-python -m venv padenv
+python -m venv <venv-name>
 source <venv-name>/bin/activate  # On macOS/Linux
 .\<venv-name>\Scripts\activate  # On Windows
 ```
 
-### 3. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-or run 
+#### 3. Install Dependencies
+Run this to install python dependencies and models needed
 
 ```bash
 python ./src/install_pkgs.py
 ```
 
-### 4. Install Additional Dependencies
+#### 4. Install Poppler (required for pdf2image):
 
-#### Poppler (required for pdf2image):
-
-**Linux and macOS:**
-
-1. Install Homebrew if you dont have it already:
+**For macOS/Linux with Homebrew:**
+1. Install Homebrew if you don't have it: 
     ```bash
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     ```
-2. Verify Homebrew Version:
-    ```bash
-    brew --version
-    ```
-3. Now install Poppler with Homebrew:
+2. Install poppler
     ```bash
     brew install poppler
     ```
-
-**Windows:**
+**For Windows:**
 
 1. Install Chocolatey from this website:  
-   [https://chocolatey.org/](https://chocolatey.org/)
+    [https://chocolatey.org/](https://chocolatey.org/)
 2. Run:
     ```bash
     choco install poppler
     ```
+3. Add the bin/ folder to your system's PATH.
 
-## Running the Pipeline
 
-To run the entire processing pipeline, use the following command:
+
+### Running the Pipeline
+With specified input and output dirs:
+
+```
+python main.py --input-dir ./<YOUR_INPUT_DIR_NAME> --output-dir ./<YOUR_OUTPUT_DIR_NAME>
+```
+    
+To run the entire processing pipeline with sample files, use the following command:
 
 ```bash
 python main.py --bulk
 python main.py --sample
 python main.py --file filename
 ```
+
+Outputs will be in these directories:
+
+```
+data/images/extracted_images
+data/images/tables
+```
+
 
 This will execute the scripts in the following order:
 
@@ -98,7 +93,83 @@ This will execute the scripts in the following order:
 5. **select_target_images.py** - Selects target images for further processing.
 6. **extract_and_save_images.py** - Extracts and saves images based on the processed results.
 
-## Notes
+### Notes
 
 - Ensure that the virtual environment is activated before running any scripts.
 - Modify paths and configurations as needed in the `config.py` file located in the `src/` directory.
+
+
+
+## OPTION 2: Pull and Run Docker Image
+Make sure docker is installed and running
+
+1. Run this to pull image: 
+    ```bash
+    docker pull brunofelalaga/picaxe-paddleocr:v1
+    ```
+
+2. Go to  Project Folder. 
+    ```bash
+    cd /path/to/your/project_folder
+    ```
+
+3. Run the Docker Container for any input location or either of the 3 modes [sample/bulk/file]:
+
+    With specified input/output dirs outside sample and bulk folders:
+
+    ```bash
+    docker run --rm \
+                -v $(pwd)/INPUT_DIR:/app/INPUT_DIR \
+                -v $(pwd)/OUTPUT_DIR:/app/OUTPUT_DIR \
+                brunofelalaga/picaxe-paddleocr:v1 \
+                --input-dir ./INPPUT_DIR --output-dir ./OUTPUT_DIR
+    ```
+
+    
+    For --sample mode:
+
+    ```bash
+    docker run -it --rm \
+                    -v $(pwd)/data/pdf_files/sample_papers:/app/data/pdf_files/sample_papers \
+                    -v $(pwd)/data/images:/app/data/images \
+                    brunofelalaga/picaxe-paddleocr:v1 --sample
+    ```
+
+    For --bulk mode:
+
+    ```bash
+    docker run -it --rm \
+                    -v $(pwd)/data/pdf_files/bulk_papers:/app/data/pdf_files/bulk_papers \
+                    -v $(pwd)/data/images:/app/data/images \
+                    brunofelalaga/picaxe-paddleocr:v1 --bulk
+    ```
+
+    For --file :
+
+    ```bash
+    docker run -it --rm \
+                    -v $(pwd)/data/pdf_files/sample_papers:/app/data/pdf_files/sample_papers \
+                    -v $(pwd)/data/images:/app/data/images \
+                    brunofelalaga/picaxe-paddleocr:v1 --file Ketchem.pdf
+    ```
+    
+    Outputs will be in these directories:
+
+    ```
+    data/images/extracted_images
+    data/images/tables
+    ```
+    
+
+   
+
+
+#### Data Folder Structure
+```
+data/
+├── pdf_files/
+│   ├── sample_papers/     # PDFs for --sample and --file modes
+│   └── bulk_papers/       # PDFs for --bulk mode
+├── images/                # Output images (auto-created)
+└── logs/                  # Log files (auto-created)
+```
