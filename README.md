@@ -19,6 +19,7 @@ There are 2 Options:
 git clone -b picAxe_paddleocr https://github.com/acguerr1/imageextraction.git <local-destination-name>
 cd <local-destination-name>
 ```
+NOTE: If you cloned main instead or the tagged version please make sure to change directory into PicAxe-OCR folder
 
 #### 2. Set Up the Virtual Environment
 
@@ -100,6 +101,7 @@ This will execute the scripts in the following order:
 
 
 ## OPTION 2: Pull and Run Docker Image
+Make sure docker is installed and running
 
 1. Run this to pull image: 
     ```bash
