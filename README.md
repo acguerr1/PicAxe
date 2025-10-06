@@ -14,7 +14,9 @@ b. **PicAxe-OCR** removes tables using Layout Parser (Shen et al., 2021)[^2], id
 
 c. The "old_version" branch contains a preliminary version of PicAxe-OCR that uses pytesseract for text removal and does not perform border removal from scanned PDFs. While it will run much faster than PicAxe-OCR (Paddle), the exrtaction results will be far less accruate.
 
-   
+## Visual Flowchart for PicAxe v1.0.1:
+<img src="https://github.com/acguerr1/PicAxe/blob/goodies/JORS_flowchart_small.png?raw=true" alt="PicAxe_vis_chart" width="500"/>
+
 ## 2. What PDF features cause extraction performance errors and are you doing anything to address them?
    
 During testing, we identified six major PDF features that will cause performance errors:
@@ -51,7 +53,3 @@ To ease dependency issues, we have provided Docker files for each pipeline. If t
 [^1]: Ultralytics. YOLOv8. 2024. [https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md](https://github.com/ultralytics/ultralytics/blob/main/docs/en/models/yolov8.md).
 [^2]: Shen, Zejiang, Ruochen Zhang, Melissa Dell, Benjamin Charles Germain Lee, Jacob Carlson, and Weining Li. 2021. LayoutParser: A Unified Toolkit for Deep Learning Based Document Image Analysis. arXiv preprint. [https://doi.org/10.48550/arXiv.2103.15348](https://doi.org/10.48550/arXiv.2103.15348).
 [^3]: PaddlePaddle Community. 2024. PaddleOCR. [https://github.com/PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR).
-
-
-## Visual Flowchart for PicAxe v1.0.1:
-<img src="https://github.com/acguerr1/PicAxe/blob/goodies/JORS_flowchart_small.png?raw=true" alt="PicAxe_vis_chart" width="500"/>
