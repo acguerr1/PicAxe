@@ -52,4 +52,6 @@ To ease dependency issues, we have provided Docker files for each pipeline. If t
 [^2]: Shen, Zejiang, Ruochen Zhang, Melissa Dell, Benjamin Charles Germain Lee, Jacob Carlson, and Weining Li. 2021. LayoutParser: A Unified Toolkit for Deep Learning Based Document Image Analysis. arXiv preprint. [https://doi.org/10.48550/arXiv.2103.15348](https://doi.org/10.48550/arXiv.2103.15348).
 [^3]: PaddlePaddle Community. 2024. PaddleOCR. [https://github.com/PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR).
 
+
+## Visual Flowchart for PicAxe v1.0.1:
 <img src="https://github.com/acguerr1/PicAxe/blob/goodies/JORS_flowchart_small.png?raw=true" alt="PicAxe_vis_chart" width="500"/>
